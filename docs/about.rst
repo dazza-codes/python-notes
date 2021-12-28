@@ -2,7 +2,7 @@
 About
 =====
 
-See https://gitlab.com/dazza-codes/python-notes
+See https://github.com/dazza-codes/python-notes
 
 Code for some examples can be run by cloning
 that repo and following the instructions to get started.
@@ -21,7 +21,7 @@ The following setup assumes that
 
 .. code-block:: shell
 
-    git clone https://gitlab.com/dazza-codes/python-notes
+    git clone https://github.com/dazza-codes/python-notes
     cd python-notes
     conda create -n python-notes python=3.6
     conda activate python-notes
@@ -35,7 +35,7 @@ Some code in these notes could be inspired by various sources
 and each set of notes will contain references to resources
 consulted.  Also the project LICENCE.md file should contain
 relevant details required for OSS citations (please open an
-issue on the gitlab project for these notes if there are any
+issue on the github project for these notes if there are any
 omissions that should be fixed).
 
 PMOTW:

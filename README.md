@@ -2,8 +2,6 @@
 # Python Notes
 
 This is a random collection of notes about working with python.
-The notes are published as gitlab pages at:
-- http://dazza-codes.gitlab.io/python-notes
 
 # Getting Started
 
@@ -24,14 +22,14 @@ The following setup assumes that
 ```shell
 git clone https://gitlab.com/dazza-codes/python-notes
 cd python-notes
-conda create -n python-notes python=3.6
+conda create -n python-notes python=3.7
 conda activate python-notes
 make init  # calls poetry install
 ```
 
 # License
 
-Copyright 2019-2020 Darren Weber
+Copyright 2019-2021 Darren Weber
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -3,13 +3,13 @@ name = "python-notes"
 version = "0.1.0"
 description = "Python Notes"
 authors = [
-    "Darren Weber <dazza-codes@gitlab.com>",
+    "Darren Weber <dazza-codes@github.com>",
 ]
 license = "Apache-2.0"
 
 readme = "README.md"  # Markdown files are supported
-repository = "https://gitlab.com/dazza-codes/python-notes.git"
-homepage = "https://gitlab.com/dazza-codes/python-notes"
+repository = "https://github.com/dazza-codes/python-notes.git"
+homepage = "https://github.com/dazza-codes/python-notes"
 
 keywords = [
     "Development Status :: 2 - Pre-Alpha",
@@ -30,46 +30,21 @@ packages = [
 # hello = "notes.__main__:main"
 
 [tool.poetry.dependencies]
-python = "^3.6"
-dataclasses = {version = "*", python = "^3.6.0"}
+python = "^3.7"
 
-aiobotocore = {extras = ["awscli", "boto3"], version = "^0.12.0"}
-aioredis = "^1.3"
-click = "^7.0"
+aioredis = {extras = ["hiredis"], version = "^2.0.0"}
 databases = {extras = ["postgresql", "mysql", "sqlite"], version = "*"}
-tinydb = "^3.15"
+
+typer = "^0.4.0"
+
 
 [tool.poetry.dev-dependencies]
-autopep8 = "*"
-black = "^19.10b0"
-codecov = "*"
-doc8 = "*"
-flake8 = "*"
-flake8-type-annotations = "*"
-ipdb = "*"
-invoke-release = "*"
-m2r = "*"
-moto = {extras = ["server"], version = "^1.3.14" }
-mypy = "*"
-pylint = "*"
-pytest = "*"
-pytest-asyncio = "*"
-pytest-benchmark = "*"
-pytest-cov = "*"
-pytest-datadir = "*"
-pytest-mock = "*"
-pytest-profiling = "*"
-pytest-runner = "*"
-pytest-xdist = "*"
-readme-renderer = { version = "*", extras = ["md"] }
-setuptools = "*"
-sphinx = "*"
-sphinx-autoapi = "*"
-sphinx_rtd_theme = "*"
-twine = "*"
+py-dev-deps = "^0.3.0"
+
 
 [tool.black]
 line-length = 96
+
 
 [build-system]
 requires = ["poetry>=1.0"]
