@@ -17,7 +17,6 @@ The notes are developed in a gitlab project at:
     asyncio
     asyncio_executor
     asyncio_databases
-    aio_aws
 
     code_quality
     linux

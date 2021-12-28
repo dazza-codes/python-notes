@@ -7,67 +7,82 @@ SHELL = /bin/bash
 
 LIB = notes
 
+.PHONY: clean
 clean:
 	@rm -rf build dist .eggs *.egg-info
-	@rm -rf .benchmarks .coverage coverage.xml htmlcov prof report.xml .tox
-	@find . -type d -name '.mypy_cache' -exec rm -rf {} +
-	@find . -type d -name '__pycache__' -exec rm -rf {} +
-	@find . -type d -name '*pytest_cache*' -exec rm -rf {} +
-	@find . -type f -name "*.py[co]" -exec rm -rf {} +
+	rm -rf .benchmarks .coverage coverage.xml htmlcov prof report.xml .tox
+	find . -type d -name '.mypy_cache' -exec rm -rf {} +
+	find . -type d -name '__pycache__' -exec rm -rf {} +
+	find . -type d -name '*pytest_cache*' -exec rm -rf {} +
+	find . -type f -name "*.py[co]" -exec rm -rf {} +
 
-coverage:
-	@poetry run pytest \
-		-W ignore::DeprecationWarning \
-		--cov-config .coveragerc \
-		--verbose \
-		--cov-report term \
-		--cov-report html \
-		--cov-report xml \
-		--cov=$(LIB) tests
-
+.PHONY: docs
 docs: clean
 	@cd docs
-	@rm -rf _build
-	@poetry run make html
-	@poetry run doc8
-	@echo -e "\033[95m\n\nBuild successful! View the docs homepage at docs/_build/html/index.html.\n\033[0m"
+	rm -rf _build
+	poetry run make html
+	poetry run doc8
+	echo -e "\033[95m\n\nBuild successful! View the docs homepage at docs/_build/html/index.html.\n\033[0m"
 
+.PHONY: flake8
 flake8: clean
 	@poetry run flake8 --ignore=E501 $(LIB)
 
+.PHONY: format
 format: clean
 	@poetry run black $(LIB) tests docs *.py
 
+.PHONY: init
 init: poetry
-	@source "$(HOME)/.poetry/env"
-	@rm -f poetry.lock
-	@poetry run pip install --upgrade pip
-	@poetry install -v --no-interaction
+	@poetry env info
+	[[ -f pip.conf ]] && cp pip.conf $$(poetry env info -p)
+	poetry run python -m pip install --upgrade pip
+	poetry install -v --no-interaction #--extras all
 
+.PHONY: lint
 lint: clean
 	@poetry run pylint --disable=missing-docstring tests
-	@poetry run pylint $(LIB)
+	poetry run pylint $(LIB)
 
+.PHONY: test
 test: clean
-	@poetry run pytest -q --durations=10 --show-capture=no --junitxml=report.xml tests
+	@poetry run pytest \
+		--durations=10 \
+		--show-capture=no \
+		--cov-config .coveragerc \
+		--cov-report html \
+		--cov-report term \
+		--cov=$(LIB) tests
 
+.PHONY: typehint
 typehint: clean
 	@poetry run mypy --follow-imports=skip $(LIB)
 
+.PHONY: package
 package: clean
 	@poetry check
-	@poetry build
+	poetry build
 
+.PHONY: package-check
 package-check: package
 	@poetry run twine check dist/*
 
-publish: package-check
-	# derivative projects can enable this
-	# poetry run twine upload dist/$(LIB)-*.whl
+# Don't publish any package from this project
+#.PHONY: package-publish
+#package-publish: package-check
+#	@poetry publish
 
+.PHONY: poetry
 poetry:
-	@if ! which poetry > /dev/null; then \
-		curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+	@if ! command -v poetry > /dev/null; then \
+        curl -sSL https://install.python-poetry.org | python - ; \
 	fi
+	if ! echo "$PATH" | grep -Eq "(^|:)${HOME}/.local/bin($|:)" ; then \
+		export PATH="${HOME}/.local/bin:${PATH}"; \
+	fi
+	poetry --version
 
-.PHONY: clean coverage docs flake8 format init lint test typehint package package-check publish poetry
+.PHONY: poetry-export
+poetry-export:
+	@poetry export --without-hashes -f requirements.txt -o requirements.txt
+	sed -i -e 's/^-e //g' requirements.txt
