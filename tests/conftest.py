@@ -18,7 +18,4 @@ pytest fixtures
 """
 
 pytest_plugins = [
-    "tests.aio_aws.aws_fixtures",
-    "tests.aio_aws.aiomoto_fixtures",
-    # "tests.aws.aws_aio_fixtures",  # from aiobotocore test suite
 ]
