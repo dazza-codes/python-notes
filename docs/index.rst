@@ -21,6 +21,9 @@ The notes are developed in a gitlab project at:
     code_quality
     linux
 
+    markdown_links
+
+
 Indices and tables
 ==================
 
